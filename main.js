@@ -43,7 +43,7 @@ generatedNumbers.forEach((element) => {
 setTimeout(() => {
   generatedNumbersContainer.classList.add("d-none");
   formContainer.classList.remove("d-none");
-}, 30000);
+}, 3000);
 
 //quando l'utente clicca
 submit.addEventListener("click", () => {
@@ -56,7 +56,7 @@ submit.addEventListener("click", () => {
 
     //controllo il valore sia valido
     if (
-      element.value === isNaN() ||
+      isNaN(parseInt(element.value)) ||
       element.value === "" ||
       guessedNumbersList.includes(parseInt(element.value))
     ) {
@@ -77,7 +77,7 @@ submit.addEventListener("click", () => {
     "text-center",
     "d-flex",
     "justify-content-center",
-    "gap-2",
+    "gap-4",
     "fs-2"
   );
 
