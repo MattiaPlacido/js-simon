@@ -48,7 +48,7 @@ setTimeout(() => {
 //quando l'utente clicca
 submit.addEventListener("click", () => {
   const guessedNumbersList = []; //array di appoggio per i valori inseriti
-  const correctNumberList = []; //array contenente i valori corretti inseriti dall'utente, è dichiarato qua perchè altrimenti il contenuto è ripetuto e stampato ogni volta si clicca conferma
+  const correctNumberList = []; //array contenente i valori corretti inseriti dall'utente, è dichiarato qua perchè altrimenti il contenuto si moltiplica ogni volta che si clicca conferma
 
   //ottengo tutti i valori dai form
   for (let i = 0; i < nOfGeneratedNumbers; i++) {
@@ -58,7 +58,7 @@ submit.addEventListener("click", () => {
     if (
       element.value === isNaN() ||
       element.value === "" ||
-      guessedNumbersList.includes(element.value)
+      guessedNumbersList.includes(parseInt(element.value))
     ) {
       alert("Stai inserendo valori non validi!");
       return;
