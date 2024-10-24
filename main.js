@@ -43,7 +43,7 @@ generatedNumbers.forEach((element) => {
 setTimeout(() => {
   generatedNumbersContainer.classList.add("d-none");
   formContainer.classList.remove("d-none");
-}, 1000);
+}, 30000);
 
 //quando l'utente clicca
 submit.addEventListener("click", () => {
