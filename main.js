@@ -46,46 +46,50 @@ setTimeout(() => {
 }, 3000);
 
 //quando l'utente clicca
-submit.addEventListener("click", () => {
-  const guessedNumbersList = []; //array di appoggio per i valori inseriti
-  const correctNumberList = []; //array contenente i valori corretti inseriti dall'utente, è dichiarato qua perchè altrimenti il contenuto si moltiplica ogni volta che si clicca conferma
+submit.addEventListener(
+  "click",
+  () => {
+    const guessedNumbersList = []; //array di appoggio per i valori inseriti
+    const correctNumberList = []; //array contenente i valori corretti inseriti dall'utente, è dichiarato qua perchè altrimenti il contenuto si moltiplica ogni volta che si clicca conferma
 
-  //ottengo tutti i valori dai form
-  for (let i = 0; i < nOfGeneratedNumbers; i++) {
-    const element = document.getElementById(`input-${i + 1}`);
+    //ottengo tutti i valori dai form
+    for (let i = 0; i < nOfGeneratedNumbers; i++) {
+      const element = document.getElementById(`input-${i + 1}`);
 
-    //controllo il valore sia valido
-    if (
-      isNaN(parseInt(element.value)) ||
-      element.value === "" ||
-      guessedNumbersList.includes(parseInt(element.value))
-    ) {
-      alert("Stai inserendo valori non validi!");
-      return;
+      //controllo il valore sia valido
+      if (
+        isNaN(parseInt(element.value)) ||
+        element.value === "" ||
+        guessedNumbersList.includes(parseInt(element.value))
+      ) {
+        alert("Stai inserendo valori non validi!");
+        return;
+      }
+
+      guessedNumbersList.push(parseInt(element.value));
+
+      //se il numero corrisponde lo aggiungo
+      if (generatedNumbers.includes(guessedNumbersList[i])) {
+        correctNumberList.push(guessedNumbersList[i]);
+      }
     }
+    resultsContainer.classList.remove("d-none");
+    const numbersGroup = document.createElement("div");
+    numbersGroup.classList.add(
+      "text-center",
+      "d-flex",
+      "justify-content-center",
+      "gap-4",
+      "fs-2"
+    );
 
-    guessedNumbersList.push(parseInt(element.value));
+    resultsContainer.append(numbersGroup);
 
-    //se il numero corrisponde lo aggiungo
-    if (generatedNumbers.includes(guessedNumbersList[i])) {
-      correctNumberList.push(guessedNumbersList[i]);
-    }
-  }
-  resultsContainer.classList.remove("d-none");
-  const numbersGroup = document.createElement("div");
-  numbersGroup.classList.add(
-    "text-center",
-    "d-flex",
-    "justify-content-center",
-    "gap-4",
-    "fs-2"
-  );
-
-  resultsContainer.append(numbersGroup);
-
-  correctNumberList.forEach((element) => {
-    const p = document.createElement("p");
-    p.textContent = element;
-    numbersGroup.append(p);
-  });
-});
+    correctNumberList.forEach((element) => {
+      const p = document.createElement("p");
+      p.textContent = element;
+      numbersGroup.append(p);
+    });
+  },
+  { once: true }
+);
