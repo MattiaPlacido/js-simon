@@ -14,26 +14,26 @@ const randomNumberGen = (min, max) =>
   Math.floor(Math.random() * (max - min + 1)) + min;
 
 //dichiarazione variabili
-const nOfElements = 5;
+const nOfGeneratedNumbers = 5;
 const randomStart = 1;
 const randomEnd = 99;
-const elements = [];
+const generatedNumbers = [];
 
 const generatedNumbersContainer = document.getElementById("container-before");
-const resultsContainer = document.getElementById("container-after");
+const formContainer = document.getElementById("container-after");
+const resultsContainer = document.getElementById("container-results");
 
 const submit = document.getElementById("submit");
 
 //genero 5 numeri casuali e verifico non siano uguali
-for (let i = 0; i < nOfElements; i++) {
+for (let i = 0; i < nOfGeneratedNumbers; i++) {
   //ciclo per verificarte i numeri non siano uguali
   let leaningN = randomNumberGen(randomStart, randomEnd);
-  !elements.includes(leaningN) ? elements.push(leaningN) : i--;
+  !generatedNumbers.includes(leaningN) ? generatedNumbers.push(leaningN) : i--;
 }
-console.log(elements); //debugging
 
 //metto i numeri generati in pagina
-elements.forEach((element) => {
+generatedNumbers.forEach((element) => {
   const p = document.createElement("p");
   p.textContent = element;
   generatedNumbersContainer.append(p);
@@ -42,25 +42,50 @@ elements.forEach((element) => {
 //timer di 30 secondi
 setTimeout(() => {
   generatedNumbersContainer.classList.add("d-none");
-  resultsContainer.classList.remove("d-none");
+  formContainer.classList.remove("d-none");
 }, 1000);
 
 //quando l'utente clicca
 submit.addEventListener("click", () => {
-  const guessedNumbersList = [];
-  for (let i = 0; i < nOfElements; i++) {
+  const guessedNumbersList = []; //array di appoggio per i valori inseriti
+  const correctNumberList = []; //array contenente i valori corretti inseriti dall'utente, è dichiarato qua perchè altrimenti il contenuto è ripetuto e stampato ogni volta si clicca conferma
+
+  //ottengo tutti i valori dai form
+  for (let i = 0; i < nOfGeneratedNumbers; i++) {
     const element = document.getElementById(`input-${i + 1}`);
 
-    if (element.value === isNaN() || element.value === "") {
+    //controllo il valore sia valido
+    if (
+      element.value === isNaN() ||
+      element.value === "" ||
+      guessedNumbersList.includes(element.value)
+    ) {
       alert("Stai inserendo valori non validi!");
       return;
     }
 
-    if (elements.includes(parseInt(element.value)))
-      guessedNumbersList.push(element.value);
-  }
+    guessedNumbersList.push(parseInt(element.value));
 
-  console.log(
-    `Hai indovinato i seguenti numeri : ${guessedNumbersList.join(" ")}`
+    //se il numero corrisponde lo aggiungo
+    if (generatedNumbers.includes(guessedNumbersList[i])) {
+      correctNumberList.push(guessedNumbersList[i]);
+    }
+  }
+  resultsContainer.classList.remove("d-none");
+  const numbersGroup = document.createElement("div");
+  numbersGroup.classList.add(
+    "text-center",
+    "d-flex",
+    "justify-content-center",
+    "gap-2",
+    "fs-2"
   );
+
+  resultsContainer.append(numbersGroup);
+
+  correctNumberList.forEach((element) => {
+    const p = document.createElement("p");
+    p.textContent = element;
+    numbersGroup.append(p);
+  });
 });
