@@ -22,8 +22,6 @@ const elements = [];
 const generatedNumbersContainer = document.getElementById("container-before");
 const resultsContainer = document.getElementById("container-after");
 
-const guessedNumbersList = [];
-
 const submit = document.getElementById("submit");
 
 //genero 5 numeri casuali e verifico non siano uguali
@@ -49,11 +47,16 @@ setTimeout(() => {
 
 //quando l'utente clicca
 submit.addEventListener("click", () => {
-  //da fare controlli sugl'input
+  const guessedNumbersList = [];
   for (let i = 0; i < nOfElements; i++) {
     const element = document.getElementById(`input-${i + 1}`);
 
-    if (elements.includes(parseInt(element.value)) && !isNaN(element.value))
+    if (element.value === isNaN() || element.value === "") {
+      alert("Stai inserendo valori non validi!");
+      return;
+    }
+
+    if (elements.includes(parseInt(element.value)))
       guessedNumbersList.push(element.value);
   }
 
